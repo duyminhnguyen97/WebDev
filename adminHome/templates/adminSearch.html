@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+    <div>
+        <div align="center" style="margin-top: 100px;">
+            <h1>
+                Search
+            </h1>
+            <form method="get">
+                <input type="text" name="q" placeholder="Search Drugs.."/>
+                <input type="submit" value="Search"/><br><br>
+            </form>
+        </div>
+        <div style="width: 400px; margin: auto;">
+            <ul>
+                {% if results is None %}
+                    <li>No result found!</li>
+                {% else %}
+                    {% for drug in results %}
+                        <li><a href="{% url 'admin-edit-drug' drug.id %}">{{ drug }}</a></li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+            <div>
+                <p id="back-button" style="text-align: right;"><a href="{% url 'admin-index' %}" style="color: red;"><b>Back</b></a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

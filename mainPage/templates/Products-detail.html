@@ -1,0 +1,287 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Products-detail.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <b>
+        <div class="nav-bar-top">
+            <nav class="navbar navbar-expand-sm bg-light navbar-light w-100 fixed-top">
+                <a class="navbar-brand" style="padding-right:10px; border-right:1px solid black" href="{% url 'page-home' %}">DRUGTEST</a>
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <div class="nav-items d-flex">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'page-home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#NEWS">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="{% url 'page-product' %}" id="navbardrop" data-toggle="dropdown">
+                                    Products
+                              </a>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href="{% url 'page-product' %}">Medicine</a>
+                              <a class="dropdown-item" href="#">Weed</a>
+                          </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'page-about' %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Shopping_cart"><img style="padding-left: 10px;" src="{% static "image/buy.png" %}"></a>
+                        </li>
+                    </div>
+		</b>
+					<div>
+						<form class="nav-items d-flex" method="get">
+							<li class="nav-item" id="search_bar">
+								<input type="text" name="q" placeholder="Search..">
+							</li>
+							<li class="nav-item" id="search_button">
+								<button type="submit" value="Search" formaction="{% url 'page-product-search' %}">
+									<i class="fa fa-search"></i>
+								</button>
+							</li>
+
+							{% if user.is_authenticated %}
+							<li class="nav-item dropdown" id="nav_logged_in">
+								<a class="nav-link dropdown-toggle" href="{% url 'admin-index' %}" id="log_in" data-toggle="dropdown">
+									<b>Hello, <span style="color: red";>{{ user.username }}!</b>
+								</a>
+								<div class="dropdown-menu" >
+									<a class="dropdown-item" href="{% url 'admin-index' %}">Admin</a>
+									<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+								</div>
+							</li>
+
+							{% else %}
+								<li class="nav-item" id="nav_sign_in">
+									<a id="sign_in" href="{% url 'login' %}">Sign in</a>
+								</li>
+							{% endif %}
+						</form>
+					</div>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+<!--
+			<nav>
+				<ul id="nav_list">
+					<li id="nav_item"><a href="{% url 'page-home' %}">Home</a></li>
+					<li id="nav_item"><a href="#news">News</a></li>
+					<li id="nav_item"><a href="{% url 'page-product' %}">Product</a>
+						<ul>
+							<li><a href="{% url 'page-product' %}">Medicine</a></li>
+							<li><a href="#weed">Weed</a></li>
+						</ul>
+					</li>
+					<li id="nav_item"><a href="#Contact">Contact</a></li>
+					<li id="nav_item"><a href="{% url 'page-about' %}">About</a></li>
+					<li id="nav_item"><a href="#Shopping_cart"><img src="{% static "image/buy.png" %}"></a></li>
+					<li id="nav_item">
+						<form method="get"">
+							<li id="search_bar"><input type="text" name="q" placeholder="Search.."></li>
+							<li id="search_button"><button type="submit" value="Search" formaction="{% url 'page-product-search' %}"><i class="fa fa-search"></i></button></li>
+						</form>
+					</li>
+
+
+					{% if user.is_authenticated %}
+						<li id="nav_item">
+							<a id="logged_in" href="{% url 'admin-index' %}"><b>Hello, <span style="color: red";>{{ user.username }}!</b></span></a>
+							<ul>
+								<li><a href="{% url 'admin-index' %}">Admin</a></li>
+								<li><a href="{% url 'logout' %}">Logout</a></li>
+							</ul>
+						</li>
+					{% else %}
+						<li id="nav_item"><a id="sign_in" href="{% url 'login' %}">Sign in</a></li>
+					{% endif %}
+				</ul>
+			</nav>
+    </header>
+    -->
+    <div id="main" style="background-color: rgb(206, 232, 250); padding-top: 100px;">
+        <div id="page-title" class="no-background" style="padding-left: 15px">
+            <h1 style="text-align: center;">
+                {{ this_drug.drug_name }}
+            </h1>
+        </div>
+
+        <div id="drug-detail">
+                <div class="content">
+                    <p class="drug-caution" style="position:relative; border-bottom:1px solid black; padding-left: 10%; padding-right: 10%;">
+                        <i>
+                            Thông tin giới thiệu dưới đây dành cho các cán bộ y tế dùng để tra cứu, sử dụng trong công tác chuyên môn hàng ngày. Đối với người bệnh, khi sử dụng cần có chỉ định/ hướng dẫn sử dụng của bác sĩ/ dược sĩ để đảm bảo an toàn và hiệu quả.<br>
+                            Nội dung được trích từ Sổ tay sử dụng thuốc Vinmec 2019 do Bệnh viện Đa khoa Quốc tế Vinmec biên soạn, Nhà xuất bản Y học ấn hành tháng 9/2019. Sách được bán tại Nhà thuốc, Bệnh viện Đa khoa Quốc tế Vinmec Times City (458 Minh Khai, Hai Bà Trưng, Hà Nội), giá bìa 220.000 VNĐ/cuốn.
+                        </i>
+                    </p>
+                    <div class="content d-flex">
+                        <div class="drug-nav-left col-1" style="border-right:1px solid black">
+                            <h4>
+                                Mục Lục
+                            </h4>
+
+                                <a href="#show-all" class="hide-other-trigger active"><i class="fa fa-list-ul fa-fw" aria-hidden="true"></i> Hiển thị tất cả<br></a>
+
+                            {% if this_drug.drug_form != '' %}
+                                <a href="#formulation_and_brand" class="hide-other-trigger"><i class="fa fa-magic fa-fw" aria-hidden="true"></i> Dạng bào chế - biệt dược<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_class != '' %}
+                                <a href="#drug_type_free" class="hide-other-trigger"><i class="fa fa-leaf fa-fw" aria-hidden="true"></i> Nhóm thuốc – Tác dụng<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_indication != '' %}
+                                <a href="#uses" class="hide-other-trigger"><i class="fa fa-check fa-fw" aria-hidden="true"></i>Chỉ định<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_contraindication != '' %}
+                                <a href="#contraindication" class="hide-other-trigger"><i class="fa fa-times fa-fw" aria-hidden="true"></i> Chống chỉ định<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_careful != '' %}
+                                <a href="#warning2" class="hide-other-trigger"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> Thận trọng<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_side_effect != '' %}
+                                <a href="#unwanted_effect" class="hide-other-trigger"><i class="fa fa-frown-o fa-fw" aria-hidden="true"></i> Tác dụng không mong muốn<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_dosage != '' %}
+                                <a href="#instructions" class="hide-other-trigger"><i class="fa fa-file-text fa-fw" aria-hidden="true"></i> Liều và cách dùng<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_attention != '' %}
+                                <a href="#caution" class="hide-other-trigger"><i class="fa fa-sticky-note fa-fw" aria-hidden="true"></i> Chú ý khi sử dụng<br></a>
+                            {% endif %}
+
+                            {% if this_drug.drug_reference != '' %}
+                                <a href="#references" class="hide-other-trigger"><i class="fa fa-question-circle-o fa-fw" aria-hidden="true"></i> Tài liệu tham khảo<br></a>
+                            {% endif %}
+                        </div>
+                        <div class="drug-body col-11">
+
+                            {% if this_drug.drug_form != '' %}
+                                <section class="formulation_and_brand collapsible-container collapsible-block expanded hide-other-content clear-float">
+                                    <h2 id="formulation_and_brand" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-magic fa-fw" aria-hidden="true"></i> <span><u>Dạng bào chế - biệt dược</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_form|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_class != '' %}
+                                <section class="drug_type_free collapsible-container collapsible-block expanded hide-other-content clear-float">
+                                    <h2 id="drug_type_free" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-leaf fa-fw" aria-hidden="true"></i> <span><u>Nhóm thuốc – Tác dụng</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_class|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_indication != '' %}
+                                <section class="uses collapsible-container collapsible-block expanded hide-other-content clear-float">
+                                    <h2 id="uses" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-check fa-fw" aria-hidden="true"></i> <span><u>Chỉ định</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_indication|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_contraindication != '' %}
+                                <section class="contraindication collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="contraindication" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-times fa-fw" aria-hidden="true"></i> <span><u>Chống chỉ định</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_contraindication|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_careful != '' %}
+                                <section class="warning2 collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="warning2" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-exclamation-triangle fa-fw" aria-hidden="true"></i> <span><u>Thận trọng</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_careful|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_side_effect != '' %}
+                                <section class="unwanted_effect collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="unwanted_effect" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-frown-o fa-fw" aria-hidden="true"></i> <span><u>Tác dụng không mong muốn</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p style="margin-left:0cm; margin-right:0cm; text-align:justify;text-align: center">{{ this_drug.drug_side_effect|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_dosage != '' %}
+                                <section class="instructions collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="instructions" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-file-text fa-fw" aria-hidden="true"></i> <span><u>Liều và cách dùng</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p style="margin-left:0cm; margin-right:0cm; text-align:justify; text-align: center">{{ this_drug.drug_dosage|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_attention != '' %}
+                                <section class="caution collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="caution" class="header collapse-trigger" style="color: rgb(0, 97, 189);"><i class="fa fa-sticky-note fa-fw" aria-hidden="true"></i> <span><u>Chú ý khi sử dụng</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p style="margin-left:0cm; margin-right:0cm; text-align:justify; text-align: center;">{{ this_drug.drug_attention|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                            {% if this_drug.drug_reference != '' %}
+                                <section class="references collapsible-container collapsible-block expanded hide-other-content">
+                                    <h2 id="references" class="header collapse-trigger"><i class="fa fa-question-circle-o fa-fw" aria-hidden="true"></i> <span><u>Tài liệu tham khảo</u></span></h2>
+                                    <div class="body collapsible-target">
+                                        <p>{{ this_drug.drug_reference|linebreaks }}</p>
+                                    </div>
+                                </section>
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+    </div>
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">News</a></li>
+            <li><a href="#">Store</a></li>
+        </ul>
+        <ul>
+            <li>Address</li>
+            <li>Tran Duy Hung</li>
+            <li>Nguyen Khanh Toan</li>
+        </ul>
+        <div class="footer-sm">
+            <a href="#"><img src="{% static "image/facebook.png" %}" alt="fb icon"></a>
+            <img src="{% static "image/phone.png" %}" alt="phone icon"></a>
+        </div>
+    </footer>
+</body>
+
+</html>

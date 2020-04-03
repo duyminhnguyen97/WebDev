@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, text/html, charset=utf-8" http-equiv="Content-Type" />
+    <title>Edit Drug</title>
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'css/style-admin.css' %}" />
+</head>
+
+<body>
+    <h2 style="text-align: center; margin-top: 50px;">Edit Drug</h2>
+    <form method="POST" style="margin-bottom: 30px; width: 600px;">
+        {% csrf_token %}
+        <div class="container">
+            <label for="drug_name">Tên thuốc:</label><br>
+            <textarea rows="3" cols="75" id="drug_name" name="drug_name" class="drug_name" required style="margin-left: 10px">{{ this_drug.drug_name }}</textarea><br><br>
+            <label for="drug_form">Dạng bào chế - biệt dược:</label><br>
+            <textarea rows="3" cols="75" id="drug_form" name="drug_form" style="margin-left: 10px">{{ this_drug.drug_form }}</textarea><br><br>
+            <label for="drug_class">Nhóm thuốc – Tác dụng:</label><br>
+            <textarea rows="3" cols="75" id="drug_class" name="drug_class" style="margin-left: 10px">{{ this_drug.drug_class }}</textarea><br><br>
+            <label for="drug_indication">Chỉ định:</label><br>
+            <textarea rows="3" cols="75" id="drug_indication" name="drug_indication" style="margin-left: 10px">{{ this_drug.drug_indication }}</textarea><br><br>
+            <label for="drug_contraindication">Chống chỉ định:</label><br>
+            <textarea rows="3" cols="75" id="drug_contraindication" name="drug_contraindication" style="margin-left: 10px">{{ this_drug.drug_contraindication }}</textarea><br><br>
+            <label for="drug_careful">Thận trọng:</label><br>
+            <textarea rows="3" cols="75" id="drug_careful" name="drug_careful" style="margin-left: 10px">{{ this_drug.drug_careful }}</textarea><br><br>
+            <label for="drug_side_effect">Tác dụng không mong muốn:</label><br>
+            <textarea rows="3" cols="75" id="drug_side_effect" name="drug_side_effect" style="margin-left: 10px">{{ this_drug.drug_side_effect }}</textarea><br><br>
+            <label for="drug_dosage">Liều và cách dùng:</label><br>
+            <textarea rows="3" cols="75" id="drug_dosage" name="drug_dosage" style="margin-left: 10px">{{ this_drug.drug_dosage }}</textarea><br><br>
+            <label for="drug_attention">Chú ý khi sử dụng:</label><br>
+            <textarea rows="3" cols="75" id="drug_attention" name="drug_attention" style="margin-left: 10px">{{ this_drug.drug_attention }}</textarea><br><br>
+            <label for="drug_reference">Tài liệu tham khảo:</label><br>
+            <textarea rows="3" cols="75" id="drug_reference" name="drug_reference" style="margin-left: 10px">{{ this_drug.drug_reference }}</textarea><br><br>
+            <label for="drug_status">Tình trạng kho:</label><br>
+            {% if this_drug.drug_status == True %}
+                <input type="radio" id="drug_status" name="drug_status" value="True" required style="margin-left: 10px" checked> Còn hàng<br>
+                <input type="radio" id="drug_status" name="drug_status" value="False" required style="margin-left: 10px"> Hết hàng<br><br>
+            {% else %}
+                <input type="radio" id="drug_status" name="drug_status" value="True" required style="margin-left: 10px"> Còn hàng<br>
+                <input type="radio" id="drug_status" name="drug_status" value="False" required style="margin-left: 10px" checked> Hết hàng<br><br>
+            {% endif %}
+            <button type="submit" formaction="{% url 'admin-edit-drug-success' this_drug.id %}">Save Changes</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1; padding-bottom: 55px;">
+            <input type="button" onclick="window.location.href = '{% url 'admin-search' %}';" value="Cancel" class="logoutbtn"/>
+            <input type="button" onclick="window.location.href = '{% url 'admin-delete-drug' this_drug.id %}';" value="Delete" class="logoutbtn" style="float: left;"/>
+        </div>
+    </form>
+</body>
+
+</html>

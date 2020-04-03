@@ -1,0 +1,14 @@
+{% extends "baseProducts.html" %}
+	{% block content %}
+	<div id="content">
+		{% if results is None %}
+			<h4 style="padding-top: 25px; text-align: center;"><b>No results found for "<a style="color: red;">{{ query }}</a>"!</b></h4>
+		{% else %}
+			<h4 style="padding-top: 25px; text-align: center;"><b>Search results for "<a style="color: red;">{{ query }}</a>":</b></h4>
+
+			{% for drug in results %}
+				<div><b><a href="{% url 'page-product-detail' drug.id %}" style="color: black;">{{ drug.drug_name }}</a></b></div>
+			{% endfor %}
+		{% endif %}
+	</div>
+	{% endblock content %}

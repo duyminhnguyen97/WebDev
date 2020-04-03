@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, text/html, charset=utf-8" http-equiv="Content-Type" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link rel = "stylesheet" type = "text/css" href = "{% static 'css/style-admin.css' %}" />
+
+</head>
+
+<body>
+    <h2 style="text-align: center; margin-top: 50px;">Hello <span style="color: red";>{{ user.username }}</span>! What do you want to do?</h2><br>
+
+    <form>
+        <div class="container">
+            <button id="addNew" type="submit" formaction="{% url 'admin-add-drug' %}">Add new drug</button>
+
+            <button id="editDrug" type="submit" formaction="{% url 'admin-search' %}">Edit drug info</button>
+
+            <button id="backHome" type="submit" formaction="{% url 'page-home' %}">Back to Home page</button>
+        </div>
+        <div class="container" style="background-color:#f1f1f1; height: 86px;">
+            <input type="button" onclick="window.location.href = '{% url 'logout' %}';" value="Logout" class="logoutbtn"/>
+        </div>
+    </form>
+</body>
+
+</html>

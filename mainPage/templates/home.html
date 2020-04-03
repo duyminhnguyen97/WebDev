@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style-home.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <b>
+        <div class="nav-bar-top">
+            <nav class="navbar navbar-expand-sm bg-light navbar-light w-100 fixed-top">
+                <a class="navbar-brand" style="padding-right:10px; border-right:1px solid black" href="{% url 'page-home' %}">DRUGTEST</a>
+                <ul class="navbar-nav w-100 justify-content-between">
+                    <div class="nav-items d-flex">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'page-home' %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#NEWS">News</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="{% url 'page-product' %}" id="navbardrop" data-toggle="dropdown">
+                                    Products
+                              </a>
+                          <div class="dropdown-menu">
+                              <a class="dropdown-item" href="{% url 'page-product' %}">Medicine</a>
+                              <a class="dropdown-item" href="#">Weed</a>
+                          </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'page-about' %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Shopping_cart"><img style="padding-left: 10px;" src="{% static "image/buy.png" %}"></a>
+                        </li>
+                    </div>
+		</b>
+					<div>
+						<form class="nav-items d-flex" method="get">
+							<li class="nav-item" id="search_bar">
+								<input type="text" name="q" placeholder="Search..">
+							</li>
+							<li class="nav-item" id="search_button">
+								<button type="submit" value="Search" formaction="{% url 'page-product-search' %}">
+									<i class="fa fa-search"></i>
+								</button>
+							</li>
+
+							{% if user.is_authenticated %}
+							<li class="nav-item dropdown" id="nav_logged_in">
+								<a class="nav-link dropdown-toggle" href="{% url 'admin-index' %}" id="log_in" data-toggle="dropdown">
+									<b>Hello, <span style="color: red";>{{ user.username }}!</b>
+								</a>
+								<div class="dropdown-menu" >
+									<a class="dropdown-item" href="{% url 'admin-index' %}">Admin</a>
+									<a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+								</div>
+							</li>
+
+							{% else %}
+								<li class="nav-item" id="nav_sign_in">
+									<a id="sign_in" href="{% url 'login' %}">Sign in</a>
+								</li>
+							{% endif %}
+						</form>
+					</div>
+                </ul>
+            </nav>
+        </div>
+    </header>
+		<main>
+			<section class="banner">
+			</section>
+			<section class="link">
+				<a href="#">
+					<div class="squarebox" id="news">
+						<h3>News</h3>
+					</div>
+				</a>
+				<a href="{% url 'page-product' %}">
+					<div class="rectanglebox" id="products">
+						<h3>Products</h3>
+					</div>
+				</a>
+				<a href="{% url 'page-about' %}">
+					<div class="squarebox" id="about_us">
+						<h3>about us</h3>
+					</div>
+				</a>
+				<a href="#">
+					<div class="rectanglebox">
+						<h3>link4</h3>
+					</div>
+				</a>
+				<a href="#">
+					<div class="squarebox">
+						<h3>Link5</h3>
+					</div>
+				</a>
+				<a href="#">
+					<div class="squarebox">
+						<h3>link6</h3>
+					</div>
+				</a>
+			</section>
+		</main>
+		<footer>
+			<ul class="footer-links">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">News</a></li>
+				<li><a href="#">Store</a></li>
+			</ul>
+			<ul>
+				<li>Address</li>
+				<li>Tran Duy Hung</li>
+				<li>Nguyen Khanh Toan</li>
+			</ul>
+			<div class="footer-sm">
+				<a href="#"><img src="{% static "image/facebook.png" %}" alt="fb icon"></a>
+				<img src="{% static "image/phone.png" %}" alt="phone icon"></a>
+			</div>
+		</footer>
+	</body>
+</html>

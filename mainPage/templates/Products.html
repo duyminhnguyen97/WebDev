@@ -1,0 +1,8 @@
+{% extends "baseProducts.html" %}
+	{% block content %}
+	<div id="content">
+		{% for drug in drug_info %}
+			<div><b><a href="{% url 'page-product-detail' drug.id %}" style="color: black;">{{ drug.drug_name }}</a></b></div>
+		{% endfor %}
+	</div>
+	{% endblock content %}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete Drug</title>
+</head>
+<body>
+    <h1 style="text-align: center; margin-top: 100px;">Are you sure you want to delete <a style="color: red;">{{ this_drug.drug_name }}</a>?</h1>
+    <div>
+        <div style="width: 10%; float: left; text-align: center; margin-left: 37%; margin-right: 3%;">
+            <h2>
+                <a href="{% url 'admin-edit-drug' this_drug.id %}">NO</a>
+            </h2>
+        </div>
+        <div style="width: 10%; float: left; text-align: center; margin-left: 3%; margin-right: 37%;">
+            <h2>
+                <a href="{% url 'admin-delete-drug-success' this_drug.id %}">YES</a>
+            </h2>
+        </div>
+    </div>
+</body>
+</html>
